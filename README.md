@@ -65,7 +65,13 @@ This project implements a Retrieval-Augmented Generation (RAG) model using vario
 
 ## Project Structure
 
-my_rag_project/ │ ├── loaders.py # Custom file loaders for different document types ├── retriever.py # Enhanced retriever class using BM25 ├── utils.py # Utility functions for generating rephrased questions and detailed context ├── main.py # Main logic for loading documents, creating vector store, and querying ├── app.py # Flask web application ├── requirements.txt # List of required packages ├── .env # Environment variables (not included in the repository) ├── .gitignore # Git ignore file └── README.md # Project documentation
+├── loaders.py # Custom file loaders for different document types 
+├── retriever.py # Enhanced retriever class using BM25 
+├── utils.py # Utility functions for generating rephrased questions and detailed context 
+├── main.py # Main logic for loading documents, creating vector store, and querying 
+├── app.py # Flask web application ├── requirements.txt # List of required packages 
+├── .env # Environment variables (not included in the repository) 
+├── .gitignore # Git ignore file └── README.md # Project documentation
 
 
 ## Environment Variables
