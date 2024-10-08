@@ -1,0 +1,14 @@
+Flask
+pandas
+numpy
+PyMuPDF
+torch
+Pillow
+python-docx
+rank-bm25
+transformers
+langchain
+nest_asyncio
+langchain-community
+langchain-openai
+langchain-community
