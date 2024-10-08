@@ -12,3 +12,4 @@ nest_asyncio
 langchain-community
 langchain-openai
 langchain-community
+faiss-cpu

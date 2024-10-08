@@ -1,6 +1,7 @@
 import numpy as np
 from rank_bm25 import BM25Okapi
 from langchain.schema import Document
+import asyncio
 
 class EnhancedRetriever:
     def __init__(self, vectorstore, top_k=5):
@@ -9,7 +10,7 @@ class EnhancedRetriever:
 
     async def get_relevant_documents(self, query):
         retriever = self.vectorstore.as_retriever()
-        documents = await asyncio.to_thread(retriever.get_relevant_documents, query)
+        documents = await asyncio.to_thread(retriever.invoke, query)
         # Filter and rank the results using BM25
         ranked_documents = self.filter_and_rank_bm25(documents, query)
         return ranked_documents[:self.top_k]

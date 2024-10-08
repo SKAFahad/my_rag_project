@@ -1,4 +1,6 @@
 import os
+os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
+
 from loaders import TextFileLoader, DocxFileLoader, XlsxFileLoader, PyMuPDFLoader, ImageFileLoader
 from retriever import EnhancedRetriever
 from utils import generate_rephrased_questions, create_detailed_context
@@ -23,7 +25,7 @@ load_dotenv()
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 
 # Model configuration
-MODEL = "llama3.1"  # Change this to "gpt-4", "gpt-3.5-turbo", "llama3.18b", etc.
+MODEL = "llama3.1"  # Change this to "gpt-4", "gpt-3.5-turbo", "llama3.1", etc.
 
 # Initialize the model and embeddings based on the chosen MODEL
 if MODEL.startswith("gpt"):
@@ -106,15 +108,12 @@ async def custom_chain(question):
     # Format the prompt with the detailed context
     prompt = prompt_template.format(context=detailed_context, question=question)
 
-    # Generate the response using the model
-    if MODEL.startswith("gpt"):
-        # For OpenAI GPT models
-        response = await asyncio.to_thread(model.predict, prompt)
-    else:
-        # For Ollama models
-        response = await asyncio.to_thread(model.generate, prompt)
+    # Ensure the prompt is passed as a list
+    response = await asyncio.to_thread(model.generate, [prompt])
 
     return response
+
+
 
 # Asynchronous querying
 async def main_chain():
@@ -144,7 +143,7 @@ else:
     index_file = 'faiss_index'
 
     if os.path.exists(index_file):
-        vectorstore = FAISS.load_local(index_file, embeddings)
+        vectorstore = FAISS.load_local(index_file, embeddings, allow_dangerous_deserialization=True)
         print("Loaded existing FAISS vector store.")
     else:
         print("No existing FAISS vector store found, creating a new one.")
